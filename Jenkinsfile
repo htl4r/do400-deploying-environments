@@ -20,7 +20,7 @@ archiveArtifacts 'target/*.jar'
 }
 }
 stage('Build Image') {
-environment { QUAY = credentials('ben_saayeed') }
+environment { QUAY = credentials('QUAY_USER') }
 steps {
 sh '''
 ./mvnw quarkus:add-extension \
@@ -32,13 +32,17 @@ sh '''
 openjdk11-jre:latest \
 -Dquarkus.container-image.build=true \
 -Dquarkus.container-image.registry=quay.io \
--Dquarkus.container-image.group=$ben_saayeed \
+-Dquarkus.container-image.group=$QUAY_USR \
 -Dquarkus.container-image.name=do400-deploying-environments \
--Dquarkus.container-image.username=$ben_saayeed \
--Dquarkus.container-image.password="$Sindrillakarroumty8." \
+-Dquarkus.container-image.username=$QUAY_USR \
+-Dquarkus.container-image.password="$QUAY_PSW" \
 -Dquarkus.container-image.push=true
 '''
 }
 }
-}
-}
+
+
+
+
+
+}}
